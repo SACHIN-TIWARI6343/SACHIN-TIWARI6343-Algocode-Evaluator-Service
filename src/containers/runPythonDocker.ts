@@ -37,15 +37,19 @@ async function runPythonDocker(code:string,inputTestCases:string ){
         rawlogBUffer.push(chuck);  
     });
 
+    await new Promise((resolve) => {
     loggerStream.on('end', () => {
         console.log(rawlogBUffer);
         const completeBuffer = Buffer.concat(rawlogBUffer);
         const decodeStream= decodeDockerStream(completeBuffer);
         console.log(decodeStream);
-
+        resolve(decodeStream);
     });
-    console.log((rawlogBUffer));
+})
 
-    return runPythonDockerContainer; 
+   
+   await runPythonDockerContainer.remove();
+
+    
 }
 export default runPythonDocker;

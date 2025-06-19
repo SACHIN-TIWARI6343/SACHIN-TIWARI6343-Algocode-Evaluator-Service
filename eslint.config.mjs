@@ -14,9 +14,9 @@ export default defineConfig([
       sourceType: "module",
       globals: globals.node,
     },
+   
     rules: {
-      "semi": ["error", "always"],
-      "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    
     },
   },
 ]);

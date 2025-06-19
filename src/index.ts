@@ -1,11 +1,14 @@
+console.log("starting");
+
 import bodyParser from 'body-parser';
 
 
 import express, { Express } from 'express';
 import serverConfig from './config/serverConfig';
 import apirouter from './routes';
-import samplequeueproducer from './producer/samplequeueproducer';
+//import samplequeueproducer from './producer/samplequeueproducer';
 import SampleWorker from './workers/SampleWorker';
+import runPythonDocker from './containers/runPythonDocker';
 
 
 
@@ -19,15 +22,20 @@ app.use(bodyParser.text());
 
 app.use('/api',apirouter);
 
-
+console.log("hii");
 app.listen(serverConfig.port, () => {
   console.log('Server is running on port  3000');
 
-  SampleWorker('sampleQueue');
-  samplequeueproducer('SampleJob',{
-    name:"Sachin Tiwari",
-    company:"Google",
-    Position:"Software Engineer",
-    location:" Banglore "
-  });
+
+   SampleWorker('sampleQueue');
+  // samplequeueproducer('SampleJob',{
+  //   name:"Sachin Tiwari",
+  //   company:"Google",
+  //   Position:"Software Engineer",
+  //   location:" Banglore "
+  // });
+const code = `x = input()
+print("value of x is", x)`;
+
+  runPythonDocker(code, "100")
 });

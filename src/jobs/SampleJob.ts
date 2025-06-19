@@ -29,4 +29,4 @@ export default class SampleJob implements Ijob {
             console.log("No job information available.");
         }   
     };
-}  ;
+}  

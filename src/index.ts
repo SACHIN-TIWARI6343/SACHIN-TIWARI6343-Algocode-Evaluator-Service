@@ -14,7 +14,9 @@ import runJava from './containers/runJavaDocker';
 
 import runPython from './containers/runPythonDocker';
 import runCpp from './containers/runCpp';
-
+import SubmissionWorker from './workers/submissionWorker';
+import submissionQueuProducer from './producer/submissionQueuProducer';
+import samplequeueproducer from './producer/samplequeueproducer';
 
 
 
@@ -33,6 +35,8 @@ app.listen(serverConfig.port, () => {
 
 
    SampleWorker('sampleQueue');
+   SubmissionWorker('SubmissionQeue');
+
   // samplequeueproducer('SampleJob',{
   //   name:"Sachin Tiwari",
   //   company:"Google",
@@ -40,33 +44,39 @@ app.listen(serverConfig.port, () => {
   //   location:" Banglore "
   // });
 
+  submissionQueuProducer('SubmissionJob', {
+    name: "Sachin Tiwari",  
+    company: "Google",
+    Position: "Software Engineer",
+    location: " Banglore ",
+  });
 
-const pythoncode = `x = input()
-print("value of x is", x)`;
+// const pythoncode = `x = input()
+// print("value of x is", x)`;
 
-const javacode = `
-import java.util.*;
-public class Main {
-    public static void main(String[] args) {
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
-        String x = scanner.nextLine();
-        System.out.println("value of y  is " + x);
-    }
-}
+// const javacode = `
+// import java.util.*;
+// public class Main {
+//     public static void main(String[] args) {
+//         java.util.Scanner scanner = new java.util.Scanner(System.in);
+//         String x = scanner.nextLine();
+//         System.out.println("value of y  is " + x);
+//     }
+// }
 
-`
-const cppcode = `#include <iostream>
-using namespace std; 
+// `
+// const cppcode = `#include <iostream>
+// using namespace std; 
 
-int main() {
-    string x;
-    cin >> x;
-    cout << "value of z is " << x << endl;
-    return 0;
-} 
-`
+// int main() {
+//     string x;
+//     cin >> x;
+//     cout << "value of z is " << x << endl;
+//     return 0;
+// } 
+// `
 
-   runPython(pythoncode, "100");
-   runJava(javacode, "100" );
-   runCpp(cppcode, "100" );
+//    runPython(pythoncode, "100");
+//    runJava(javacode, "100" );
+//    runCpp(cppcode, "100" );
 });

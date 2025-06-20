@@ -1,23 +1,30 @@
 import { Job } from "bullmq";
 
 import { Ijob } from "../types/bullmqjobdefination";
+import { SubmissionPayload } from "../types/submissionpaylod";
+import runCpp from "../containers/runCpp";
 
 
 export default class SubmissionJob implements Ijob {
     name: string;
-    payload: Record<string, unknown>;
+    payload: Record<string, SubmissionPayload>;
 
-    constructor( payload: Record<string, unknown>) {
-        this.name = this.constructor.name;
-        this.payload = payload;
+    constructor( payload: Record<string, SubmissionPayload>) {
+        this.name = this.constructor.name; // This will be the name of the job class
+        this.payload = payload;// Store the payload for the job
     }
 
-    handle =( job?:Job) => {
+    handle = async ( job?:Job) => {
        console.log("Handler of the JOb called");
+       console.log(this.payload);
        if(job) {
-           console.log(`Job ID: ${job.id}`);
-           console.log(`Job Name: ${job.name}`);
-           console.log(`Job Data:`, job.data);
+         
+          const key = Object.keys(this.payload)[0];
+          console.log(this.payload[key].language);
+          if(this.payload[key].language === "CPP") {
+           const response=  await runCpp(this.payload[key].code, this.payload[key].testCases);
+           console.log("Evaluated Response:", response);
+          }
        }
     };
 

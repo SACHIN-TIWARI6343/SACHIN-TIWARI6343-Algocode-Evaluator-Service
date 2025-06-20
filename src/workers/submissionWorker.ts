@@ -14,8 +14,7 @@ export default function SubmissionWorker(queuename :string)
          
         console.log("sample job worker kiking",job);
         if(job.name == "SubmissionJob"){
-            const submissionJob =new SubmissionJob(job.data);
-           
+             const submissionJob =new SubmissionJob(job.data);     
              submissionJob.handle(job);
              return true;
        }

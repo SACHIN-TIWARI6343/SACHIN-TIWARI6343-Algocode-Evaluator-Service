@@ -1,4 +1,6 @@
 export const PYTHON_IMAGE= "python:3.9-slim";
+export const JAVA_IMAGE = 'openjdk:latest';
+export const CPP_IMAGE = 'gcc:latest';
 
 // the size of docker stream 
 

@@ -8,7 +8,12 @@ import serverConfig from './config/serverConfig';
 import apirouter from './routes';
 //import samplequeueproducer from './producer/samplequeueproducer';
 import SampleWorker from './workers/SampleWorker';
-import runPythonDocker from './containers/runPythonDocker';
+
+import runJava from './containers/runJavaDocker';
+
+
+import runPython from './containers/runPythonDocker';
+import runCpp from './containers/runCpp';
 
 
 
@@ -34,8 +39,34 @@ app.listen(serverConfig.port, () => {
   //   Position:"Software Engineer",
   //   location:" Banglore "
   // });
-const code = `x = input()
+
+
+const pythoncode = `x = input()
 print("value of x is", x)`;
 
-  runPythonDocker(code, "100")
+const javacode = `
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        String x = scanner.nextLine();
+        System.out.println("value of y  is " + x);
+    }
+}
+
+`
+const cppcode = `#include <iostream>
+using namespace std; 
+
+int main() {
+    string x;
+    cin >> x;
+    cout << "value of z is " << x << endl;
+    return 0;
+} 
+`
+
+   runPython(pythoncode, "100");
+   runJava(javacode, "100" );
+   runCpp(cppcode, "100" );
 });
